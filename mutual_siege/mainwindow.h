@@ -6,6 +6,7 @@
 
 #include "castle.h"
 #include "card.h"
+#include "randoms.h"
 
 
 
@@ -29,10 +30,13 @@ private:
     Castle player1{}, player2{};
     Castle* player;
     Castle* enemy;
+    re::Randoms rand_engine;
     std::vector <QToolButton*> buttons;
+    std::vector<Card*> cards_set;
 
 
     void update_castles_stats(Castle* = nullptr);
+    void read_cards();
     std::vector<Card*> make_deck();
 
 

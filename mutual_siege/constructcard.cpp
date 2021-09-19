@@ -1,7 +1,7 @@
 #include "constructcard.h"
 #include <iostream>
 
-ConstructCard::ConstructCard(unsigned cost_, unsigned strenght_) : Card(cost_, strenght_)
+ConstructCard::ConstructCard(unsigned cost_, unsigned strenght_) : Card(cost_, strenght_), ObjectCounter<ConstructCard>()
 {
     icon_name = "worker.png";
     std::cout << "Construct card constructed" << std::endl;

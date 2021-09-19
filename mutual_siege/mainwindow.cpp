@@ -18,6 +18,7 @@
 #include <cmath>
 #include <vector>
 #include <chrono>
+#include <fstream>
 #include <iostream>
 
 
@@ -27,6 +28,7 @@ unsigned long long MainWindow::round_counter = 1;
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
+    , rand_engine{}
 {
     ui->setupUi(this);
     auto main_pic_height = ui->MainPicture->height();
@@ -34,6 +36,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->MainPicture->setPixmap(QPixmap("../pictures/background_map.png").scaled(main_pic_width, main_pic_height, Qt::KeepAspectRatio));
 
 
+    read_cards();
     player1.get_cards() = make_deck();
     player2.get_cards() = make_deck();
     buttons.resize(CARDS);
@@ -45,6 +48,7 @@ MainWindow::MainWindow(QWidget *parent)
         buttons[i] = MainWindow::findChild<QToolButton*>(button_name);
         buttons[i]->setToolButtonStyle(Qt::ToolButtonStyle::ToolButtonTextUnderIcon);
         buttons[i]->setIcon(QIcon(QPixmap(QString("../pictures/") + QString::fromStdString( player1.get_cards()[i]->get_icon_name() ))));
+        buttons[i]->setText(QString("Cost: ") + QString::number(player1.get_cards()[i]->get));
         connect(buttons[i], SIGNAL(pressed()), this, SLOT(use_card()));
 
     }
@@ -105,9 +109,43 @@ void MainWindow::update_castles_stats(Castle* enemy_castle){
 }
 
 std::vector<Card*> MainWindow::make_deck(){
-    std::vector<Card*> deck(7, new AttackCard(5,2));
-    deck.push_back(new ConstructCard(1, 1));
+
+    std::vector<Card*> deck(8, nullptr);
+    for (auto i = 0u; i < deck.size(); ++i) {
+        auto card_id = rand_engine.random_in_range(0,cards_set.size()-1);
+        std::cout << card_id << " " << std::endl;
+        deck[i] = cards_set[card_id];
+    }
     return deck;
+}
+
+void MainWindow::read_cards(){
+    for(auto i = 0u; i < 10; ++i){
+        cards_set.push_back(new AttackCard(5,2));
+    }
+    for(auto i = 0u; i < 10; ++i){
+        cards_set.push_back(new AttackCard(8,3));
+    }
+    for(auto i = 0u; i < 5; ++i){
+        cards_set.push_back(new AttackCard(15,8));
+    }
+    for(auto i = 0u; i < 5; ++i){
+        cards_set.push_back(new AttackCard(20,12));
+    }
+
+    for(auto i = 0u; i < 10; ++i){
+        cards_set.push_back(new ConstructCard(7,3));
+    }
+    for(auto i = 0u; i < 10; ++i){
+        cards_set.push_back(new ConstructCard(9,4));
+    }
+    for(auto i = 0u; i < 5; ++i){
+        cards_set.push_back(new ConstructCard(12,6));
+    }
+
+
+
+
 }
 
 MainWindow::~MainWindow()

@@ -4,7 +4,7 @@
 #include "card.h"
 #include "castle.h"
 
-class ConstructCard : public Card
+class ConstructCard : public Card, ObjectCounter<ConstructCard>
 {
 public:
     ConstructCard(unsigned, unsigned);

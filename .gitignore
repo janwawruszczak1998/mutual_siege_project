@@ -1,2 +1,4 @@
 .idea/
 build-mutual_siege-Desktop_Qt_GCC_64bit-Debug/
+mutual_siege/CMakeLists.txt.user
+mutual_siege/cmake-build-debug/

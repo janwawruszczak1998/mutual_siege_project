@@ -24,6 +24,7 @@ unsigned Castle::get_bricks_inc() const {
 }
 
 
+
 void Castle::set_weapons(unsigned value){
     weapons = value;
 }

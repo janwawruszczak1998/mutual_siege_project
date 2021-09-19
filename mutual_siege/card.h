@@ -13,7 +13,9 @@ public:
     virtual ~Card() = default;
     virtual bool operator()(Castle&, Castle&) = 0;
 
-    std::string get_icon_name() const;
+    auto get_icon_name() const;
+    auto get_cost() const;
+    auto get_strenght() const;
 
 protected:
     unsigned cost{};
